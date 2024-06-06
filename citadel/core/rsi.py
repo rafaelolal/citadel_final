@@ -22,7 +22,7 @@ def rsi(prices, period=14):
     return rsis
 
 
-def daily_rsi_decisions(prices, rsis):
+def rsi_daily_decisions(prices, rsis):
     decisions = []
     for i in range(len(prices)):
         rsi_index = i - (len(prices) - len(rsis))

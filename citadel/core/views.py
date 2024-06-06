@@ -2,10 +2,13 @@ import datetime
 from django.shortcuts import render
 from yahoofinancials import YahooFinancials
 from .moving_averages import simple_moving_averages, exponential_moving_averages, weighted_moving_averages, moving_average_daily_decisions
-from .rsi import rsi, daily_rsi_decisions
+from .rsi import rsi, rsi_daily_decisions
 from .metric_comparator import max_profit
+from .bollinger_bands import bollinger_bands, bollinger_bands_daily_decisions
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from .draw_plot import draw_plot
+from .stochastic_oscillator import stochastic_oscillator, stochastic_daily_decisions
 
 # Create your views here.
 
@@ -58,6 +61,8 @@ class MaxProfitView(APIView):
         emas = exponential_moving_averages(prices)
         wmas = weighted_moving_averages(prices)
         rsis = rsi(prices)
+        bollingers = bollinger_bands(prices)
+        stochastics = stochastic_oscillator(prices)
 
         sma_profit = max_profit(
             prices, dates, moving_average_daily_decisions(prices, smas))
@@ -66,14 +71,24 @@ class MaxProfitView(APIView):
         wma_profit = max_profit(
             prices, dates, moving_average_daily_decisions(prices, wmas))
         rsi_profit = max_profit(
-            prices, dates, daily_rsi_decisions(prices, rsis))
+            prices, dates, rsi_daily_decisions(prices, rsis))
+        bollinger_profit = max_profit(prices, dates, bollinger_bands_daily_decisions(
+            prices, bollingers[0], bollingers[2]))
+        stochastic_profit = max_profit(
+            prices, dates, stochastic_daily_decisions(prices, stochastics))
 
-        return Response({
+        data = {
             'sma': sma_profit,
             'ema': ema_profit,
             'wma': wma_profit,
-            'rsi': rsi_profit
-        })
+            'rsi': rsi_profit,
+            'bollinger': bollinger_profit,
+            'stochastic': stochastic_profit,
+        }
+
+        draw_plot(data)
+
+        return Response(data)
 
 
 # class StockDataView(APIView):
