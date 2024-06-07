@@ -1,3 +1,6 @@
+// const baseUrl = "https://f325-142-105-67-10.ngrok-free.app";
+const baseUrl = "http://127.0.0.1:8000/";
+
 function fetchData(event) {
   event.preventDefault(); // prevent the form from submitting normally
 
@@ -5,7 +8,7 @@ function fetchData(event) {
   const startDate = document.querySelector("#start-date").value;
   const endDate = document.querySelector("#end-date").value;
 
-  const url = `http://127.0.0.1:8000/core/max_profit/?ticker=${ticker}&start=${startDate}&end=${endDate}`; // replace with your API URL
+  const url = `${baseUrl}/core/max_profit/?ticker=${ticker}&start=${startDate}&end=${endDate}`; // replace with your API URL
 
   const resultDiv = document.querySelector("#result");
   resultDiv.innerHTML = "Fetching Data..."; // clear the div
@@ -131,7 +134,7 @@ function populateGallery() {
 }
 
 function getInsights(text) {
-  const url = `http://127.0.0.1:8000/core/llm/?text=${text}`;
+  const url = `${baseUrl}/core/llm/?text=${text}`;
   const insightsDiv = document.querySelector("#insights");
   insightsDiv.innerHTML = "Fetching results..."; // clear the div
   fetch(url)
