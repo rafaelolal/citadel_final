@@ -36,7 +36,7 @@ def bollinger_bands(prices, period=20, std_dev_multiplier=2):
     return upper_band, middle_band, lower_band
 
 
-def bollinger_bands_daily_decisions(prices, upper_band, lower_band):
+def bollinger_bands_daily_decisions(prices, bands):
     """
     Generates buy, sell, or hold signals based on Bollinger Bands.
 
@@ -48,6 +48,8 @@ def bollinger_bands_daily_decisions(prices, upper_band, lower_band):
     Returns:
         list: A list with buy (1), sell (-1), or hold (0) signals.
     """
+
+    upper_band, lower_band = bands
 
     signals = [None] * (len(prices) - len(upper_band))
 

@@ -15,31 +15,6 @@ from .stochastic_oscillator import stochastic_oscillator, stochastic_daily_decis
 
 # Create your views here.
 
-metrics = {
-    'simple_moving_average': simple_moving_averages,
-    'exponential_moving_averages': exponential_moving_averages,
-    'weighted_moving_averages': weighted_moving_averages,
-    'rsi': rsi,
-}
-
-# Define a list of parameter groups
-# parameter_groups = [
-#     {
-#         'name': 'moving_average_crossover',
-#         'parameters': {
-#             'long_period': None,
-#             'short_period': None,
-#         }
-#     },
-#     {
-#         'name': 'boolean_param',
-#         'parameters': {
-#             'boolean_param': None,
-#         }
-#     },
-#     # Add more parameter groups as needed
-# ]
-
 
 class MaxProfitView(APIView):
     def get(self, request, format=None):
@@ -55,34 +30,32 @@ class MaxProfitView(APIView):
         dates = [day["formatted_date"]
                  for day in data[ticker_symbol]["prices"]]
 
-        smas = simple_moving_averages(prices)
-        emas = exponential_moving_averages(prices)
-        wmas = weighted_moving_averages(prices)
-        rsis = rsi(prices)
-        bollingers = bollinger_bands(prices)
-        stochastics = stochastic_oscillator(prices)
-
-        sma_profit = max_profit(
-            prices, dates, moving_average_daily_decisions(prices, smas))
-        ema_profit = max_profit(
-            prices, dates, moving_average_daily_decisions(prices, emas))
-        wma_profit = max_profit(
-            prices, dates, moving_average_daily_decisions(prices, wmas))
-        rsi_profit = max_profit(
-            prices, dates, rsi_daily_decisions(prices, rsis))
-        bollinger_profit = max_profit(prices, dates, bollinger_bands_daily_decisions(
-            prices, bollingers[0], bollingers[2]))
-        stochastic_profit = max_profit(
-            prices, dates, stochastic_daily_decisions(prices, stochastics))
-
-        data = {
-            'sma': sma_profit,
-            'ema': ema_profit,
-            'wma': wma_profit,
-            'rsi': rsi_profit,
-            'bollinger': bollinger_profit,
-            'stochastic': stochastic_profit,
+        metrics_functions = {
+            'sma': simple_moving_averages,
+            'ema': exponential_moving_averages,
+            'wma': weighted_moving_averages,
+            'rsi': rsi,
+            'bollinger': bollinger_bands,
+            'stochastic': stochastic_oscillator
         }
+
+        decision_functions = {
+            'sma': moving_average_daily_decisions,
+            'ema': moving_average_daily_decisions,
+            'wma': moving_average_daily_decisions,
+            'rsi': rsi_daily_decisions,
+            'bollinger': bollinger_bands_daily_decisions,
+            'stochastic': stochastic_daily_decisions
+        }
+
+        data = {}
+        for metric, function in metrics_functions.items():
+            metric_values = function(prices)
+            if metric == 'bollinger':
+                metric_values = metric_values[0], metric_values[2]
+            profit = max_profit(
+                prices, dates, decision_functions[metric](prices, metric_values))
+            data[metric] = profit
 
         draw_plot(data)
 
