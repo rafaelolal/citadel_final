@@ -76,14 +76,18 @@ function fetchData(event) {
       `;
       tradingViewContainer.appendChild(tradingViewScript);
       result2Div.appendChild(tradingViewContainer);
+      
 
       getInsights(
         "You are not allowed to use the '*' character and must respond in paragraphs only. Your response should be brief and make a short argument on why each indicator generated the given profit in comparison to others" +
           JSON.stringify(data)
       );
       populateGallery();
-    })
-    .catch((error) => console.error("Error:", error));
+
+      const modalButton = document.getElementById('modalButton');
+      modalButton.removeAttribute('hidden');
+  })
+  .catch((error) => console.error("Error:", error));
 }
 
 function populateGallery() {
@@ -114,6 +118,7 @@ function getInsights(text) {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
+
       // remove all the * from the string
       data = data.replace("*", "");
       paragraphs = data.split("\n");
