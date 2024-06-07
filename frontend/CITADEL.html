@@ -14,7 +14,7 @@
 
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-      <img src="logo.png" alt="Logo" width="24" height="24" class="d-inline-block align-text-top">
+      <img src="logo.png" alt="Logo" width="24" height="24" class="d-inline-block align-text-top me-3">
       Metric Comparator
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,12 +22,12 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="CITADEL.html">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="Founder.html">Features</a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
@@ -38,8 +38,8 @@
       <div class="col">
         <div class="centered">
 
-          <h1 class=title>Metric Comparator</h1>
-          <h2>Industry Leading Quantitative Analysis</h2>
+          <h1 class="title">Metric Comparator</h1>
+          <h2>Industry Leading Simulator</h2>
 
         </div>
       </div>
@@ -52,13 +52,13 @@
 
     <form onsubmit="fetchData(event)">
       <label for="ticker">Ticker:</label>
-      <input type="text" id="ticker" name="ticker" value="AMZN" required>
+      <input type="text" id="ticker" name="ticker" value="GME" required>
 
       <label for="start-date">Start Date:</label>
-      <input type="date" id="start-date" name="start-date" value="2020-05-05" required>
+      <input type="date" id="start-date" name="start-date" value="2023-12-05" required>
 
       <label for="end-date">End Date:</label>
-      <input type="date" id="end-date" name="end-date" value="2021-05-05" required>
+      <input type="date" id="end-date" name="end-date" value="2024-04-04" required>
 
       <button type="submit">Submit</button>
     </form>
@@ -98,43 +98,44 @@
   </div>
 
 
-      <!-- Button Class -->
-      <div class="container">
-        <div class="row justify-content-center">
+  <!-- Button Class -->
+  <div class="container">
+    <div class="row justify-content-center">
 
-          <div class="col-9">
-            
-            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" hidden id="modalButton">
-                ?
-              </button>
-              
-              <!-- Modal -->
-              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                  
-                      A candlestick shows the market's open, high, low, and close prices for the day.
-                      <h2></h2>
-                      <img src="candle_stick.png" alt="Candle_stick">
+      <div class="col-9">
 
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-                </div>
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"
+          hidden id="modalButton">
+          ?
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Graph Information</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
+              <div class="modal-body">
 
+                A candlestick shows the market's open, high, low, and close prices for the day.
+                <h2></h2>
+                <img src="candle_stick.png" alt="Candle_stick">
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
           </div>
-  
         </div>
+
       </div>
-      <!-- end -->
+
+    </div>
+  </div>
+  <!-- end -->
 
 
 

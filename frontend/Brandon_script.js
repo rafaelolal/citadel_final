@@ -7,15 +7,21 @@ function fetchData(event) {
 
   const url = `http://127.0.0.1:8000/core/max_profit/?ticker=${ticker}&start=${startDate}&end=${endDate}`; // replace with your API URL
 
+  const resultDiv = document.querySelector("#result");
+  resultDiv.innerHTML = "Fetching Data..."; // clear the div
+
+  const result2Div = document.querySelector("#result2");
+  result2Div.innerHTML = "";
+
+  const galleryDiv = document.querySelector("#gallery");
+  galleryDiv.innerHTML = ""; // clear the div
+
+  const modalButton = document.getElementById("modalButton");
+  modalButton.setAttribute("hidden", "true");
+
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      const resultDiv = document.querySelector("#result");
-      resultDiv.innerHTML = ""; // clear the div
-
-      const result2Div = document.querySelector("#result2");
-      result2Div.innerHTML = "";
-
       // Create table element
       const table = document.createElement("table");
       table.classList.add("result-table");
@@ -47,10 +53,13 @@ function fetchData(event) {
       }
 
       // Append table to resultDiv
+      resultDiv.innerHTML = ""; // clear the div
+
       resultDiv.appendChild(table);
 
       // Display the stock graph
       const tradingViewContainer = document.createElement("div");
+      tradingViewContainer.innerHTML = "";
       tradingViewContainer.classList.add("tradingview-widget-container");
       const tradingViewScript = document.createElement("script");
       tradingViewScript.setAttribute("type", "text/javascript");
@@ -76,18 +85,28 @@ function fetchData(event) {
       `;
       tradingViewContainer.appendChild(tradingViewScript);
       result2Div.appendChild(tradingViewContainer);
-      
 
       getInsights(
         "You are not allowed to use the '*' character and must respond in paragraphs only. Your response should be brief and make a short argument on why each indicator generated the given profit in comparison to others" +
           JSON.stringify(data)
       );
       populateGallery();
+      const modalButton = document.getElementById("modalButton");
+      modalButton.removeAttribute("hidden");
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      const resultDiv = document.querySelector("#result");
+      resultDiv.innerHTML = "Longer date range needed!";
 
-      const modalButton = document.getElementById('modalButton');
-      modalButton.removeAttribute('hidden');
-  })
-  .catch((error) => console.error("Error:", error));
+      const result2Div = document.querySelector("#result2");
+      result2Div.innerHTML = "Error!";
+
+      const galleryDiv = document.querySelector("#gallery");
+      galleryDiv.innerHTML = "Error!"; // clear the div
+
+      console.error("Error:", error);
+    });
 }
 
 function populateGallery() {
@@ -118,7 +137,6 @@ function getInsights(text) {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-
       // remove all the * from the string
       data = data.replace("*", "");
       paragraphs = data.split("\n");
