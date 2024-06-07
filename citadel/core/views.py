@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+import os
+import google.generativeai as genai
 import datetime
 from django.shortcuts import render
 from yahoofinancials import YahooFinancials
@@ -36,11 +39,6 @@ metrics = {
 #     },
 #     # Add more parameter groups as needed
 # ]
-
-
-def convert_epoch_to_date(epoch_seconds):
-    date = datetime.datetime.fromtimestamp(epoch_seconds)
-    return date.strftime('%Y-%m-%d')
 
 
 class MaxProfitView(APIView):
@@ -90,6 +88,19 @@ class MaxProfitView(APIView):
 
         return Response(data)
 
+
+class LLMView(APIView):
+    def get(self, request, format=None):
+        text = request.query_params.get('text', None)
+
+        load_dotenv()
+        GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
+        genai.configure(api_key=GOOGLE_API_KEY)
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content(text)
+        response_text = response.text
+
+        return Response(response_text)
 
 # class StockDataView(APIView):
 #     def get(self, request, format=None):
