@@ -20,11 +20,11 @@ def draw_plot(data):
     plt.bar(labels, profits)
 
     # Set the labels
-    plt.xlabel('Metric (Buy Date - Sell Date)')
+    plt.xlabel('Metric')
     plt.ylabel('Max Profit')
 
     # Set the title
-    plt.title('Max Profit by Metric and Date')
+    plt.title('Max Profit by Metric')
 
     # Save the figure as a .jpg file in the current folder
 
