@@ -1,0 +1,7 @@
+*.history/
+env/
+*.DS_STORE
+citadel/db.sqlite3
+*__pycache__/
+*.env
+*.jpg
