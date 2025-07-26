@@ -22,11 +22,6 @@ function fetchData(event) {
         p.textContent = `Metric: ${metric}, Max Profit: ${profit}, Buy Date: ${buyDate}, Sell Date: ${sellDate}`;
         resultDiv.appendChild(p);
       }
-<<<<<<< HEAD
-    })
-    .catch((error) => console.error("Error:", error));
-}
-=======
 
       populateGallery();
     })
@@ -53,4 +48,3 @@ function populateGallery() {
     galleryDiv.appendChild(img);
   }
 }
->>>>>>> c3d67408cda330c6b1850ebe0fb3eed37120c0c8
